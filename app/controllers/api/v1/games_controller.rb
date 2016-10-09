@@ -7,18 +7,18 @@ module Api::V1
     end
 
     def create
-      @game = Game.new
-      @frames = @game.frames
+      game = Game.new
+      frames = game.frames
 
-      if @game.save
-        render json: { game: @game, frames:  @frames }, status: :created
+      if game.save
+        render json: { game: game, frames:  frames }, status: :created
       else
-        render json: @game.errors, status: :unprocessable_entity
+        render json: game.errors, status: :unprocessable_entity
       end
     end
 
     def update
-      if @game.update(game_params)
+      if @game.throw_ball(game_params.to_i)
         render json: { game: @game, frames:  @frames }
       else
         render json: @game.errors, status: :unprocessable_entity
@@ -33,7 +33,7 @@ module Api::V1
     end
 
     def game_params
-      params.fetch(:game, {})
+      params.fetch(:throw, {})
     end
   end
 end

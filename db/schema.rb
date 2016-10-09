@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161008113636) do
   end
 
   create_table "games", force: :cascade do |t|
+    t.integer  "score"
     t.integer  "current_frame"
     t.boolean  "finished"
     t.datetime "created_at",    null: false
