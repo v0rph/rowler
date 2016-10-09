@@ -46,4 +46,12 @@ class Frame < ApplicationRecord
   def spare?
     closed? && (self.first_throw + self.second_throw == MAX_PINS)
   end
+
+  def attributes_for_show
+    {
+      first_throw: self.first_throw,
+      second_throw: self.second_throw,
+      points: self.points
+    }
+  end
 end

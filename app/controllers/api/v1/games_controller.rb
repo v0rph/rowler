@@ -3,7 +3,7 @@ module Api::V1
     before_action :set_game, only: [:show, :update]
 
     def show
-      render json: { game: @game, frames: @frames }
+      render json: @game.attributes_for_show
     end
 
     def create
@@ -11,15 +11,15 @@ module Api::V1
       frames = game.frames
 
       if game.save
-        render json: { game: game, frames:  frames }, status: :created
+        render json: game.attributes_for_show, status: :created
       else
         render json: game.errors, status: :unprocessable_entity
       end
     end
 
     def update
-      if @game.throw_ball(game_params.to_i)
-        render json: { game: @game, frames:  @frames }
+      if @game.throw_ball(params[:throw].to_i)
+        render json: @game.attributes_for_show #{ game: @game, frames:  @frames }
       else
         render json: @game.errors, status: :unprocessable_entity
       end
@@ -30,10 +30,6 @@ module Api::V1
     def set_game
       @game = Game.find(params[:id])
       @frames = @game.frames
-    end
-
-    def game_params
-      params.fetch(:throw, {})
     end
   end
 end

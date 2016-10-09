@@ -30,6 +30,19 @@ class Game < ApplicationRecord
     self.frames.order(:id)[id-1]
   end
 
+
+  def attributes_for_show
+    {
+      game: {
+        id: self.id,
+        finished: self.finished,
+        current_frame: self.current_frame,
+        score: score,
+        frames: self.frames.each_with_index.collect{ |frame, i| { number: i + 1 }.merge!(frame.attributes_for_show) }
+      }
+    }
+
+  end
   private
 
   def offset_frame(offset)
@@ -43,12 +56,11 @@ class Game < ApplicationRecord
   def score_game
     if get_current_frame.closed?
       score_frame(self.current_frame)
-      self.current_frame += 1
     elsif self.current_frame == FIST_BONUS_FRAME && offset_frame(-1).spare?
-      self.score_extra_spare
+      score_extra_spare
     end
 
-
+    self.current_frame += 1
   end
 
   def score_frame(frame_number)
