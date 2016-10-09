@@ -32,7 +32,7 @@ class Game < ApplicationRecord
 
 
   def score
-    self.current_frame >= FINAL_FRAME ? get_frame(FINAL_FRAME).points : offset_frame(-1).points
+    self.current_frame > FINAL_FRAME ? get_frame(FINAL_FRAME).points : offset_frame(-1).points
   end
 
   def attributes_for_show
