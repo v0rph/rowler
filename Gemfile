@@ -7,6 +7,7 @@ gem 'puma', '~> 3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'factory_girl_rails'
   gem 'minitest-rails'
   gem 'shoulda'
 end
