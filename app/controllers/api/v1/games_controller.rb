@@ -3,7 +3,9 @@ module Api::V1
     before_action :set_game, only: [:show, :update]
 
     def show
-      render json: @game.attributes_for_show
+      if stale? @game
+        render json: @game.attributes_for_show
+      end
     end
 
     def create
