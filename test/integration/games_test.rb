@@ -85,7 +85,6 @@ module Api::V1
         put v1_game_url(id: @game.id), params: { throw: 1 }
         put v1_game_url(id: @game.id), params: { throw: 1 }
 
-      #  get v1_game_url(id: @game.id)
         assert_equal 16, JSON.parse(response.body)["game"]["score"]
       end
 

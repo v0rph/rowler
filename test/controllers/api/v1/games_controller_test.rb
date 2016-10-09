@@ -20,8 +20,10 @@ module Api::V1
     end
 
     should "return 404 if game does not exist" do
-      get v1_game_url(id: -1)
-      value(response).must_be :missing
+      assert_raises ActiveRecord::RecordNotFound do
+        get v1_game_url(id: -1)
+        value(response).must_be :missing
+      end
     end
 
     should "update game" do
