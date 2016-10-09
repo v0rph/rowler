@@ -31,6 +31,10 @@ class Game < ApplicationRecord
   end
 
 
+  def score
+    self.current_frame >= FINAL_FRAME ? get_frame(FINAL_FRAME).points : offset_frame(-1).points
+  end
+
   def attributes_for_show
     {
       game: {
@@ -43,6 +47,7 @@ class Game < ApplicationRecord
     }
 
   end
+
   private
 
   def offset_frame(offset)
@@ -56,11 +61,12 @@ class Game < ApplicationRecord
   def score_game
     if get_current_frame.closed?
       score_frame(self.current_frame)
+      self.current_frame += 1
     elsif self.current_frame == FIST_BONUS_FRAME && offset_frame(-1).spare?
       score_extra_spare
     end
 
-    self.current_frame += 1
+
   end
 
   def score_frame(frame_number)
@@ -97,9 +103,4 @@ class Game < ApplicationRecord
   def score_extra_spare
     get_frame(FINAL_FRAME).add_points(get_current_frame.first_throw)
   end
-
-  def score
-    self.current_frame >= FINAL_FRAME ? get_frame(FINAL_FRAME).points : offset_frame(-1).points
-  end
-
 end

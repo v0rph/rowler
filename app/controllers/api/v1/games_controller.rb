@@ -19,7 +19,7 @@ module Api::V1
 
     def update
       if @game.throw_ball(params[:throw].to_i)
-        render json: @game.attributes_for_show #{ game: @game, frames:  @frames }
+        render json: @game.attributes_for_show
       else
         render json: @game.errors, status: :unprocessable_entity
       end
